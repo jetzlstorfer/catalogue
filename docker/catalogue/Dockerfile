@@ -20,7 +20,7 @@ RUN apt-get update
 RUN apt-get install -y ca-certificates
 
 WORKDIR /
-COPY /app /app
+COPY --from=0 /app /app
 COPY catalogue/images/ /images/
 
 RUN	chmod +x /app && \

@@ -64,6 +64,7 @@ pipeline {
             dir ('/home/jenkins/go/src/github.com/jetzlstorfer/catalogue') {
               container('go') {
                 sh "./scripts/build.jb.sh"
+                sh "docker version"
                 sh "make release"
                 sh 'export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml'
 
