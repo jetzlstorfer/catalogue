@@ -1,6 +1,6 @@
 FROM golang:1.7
 
-COPY catalogue/ /go/src/github.com/microservices-demo/catalogue
+COPY . /go/src/github.com/microservices-demo/catalogue
 WORKDIR /go/src/github.com/microservices-demo/catalogue
 
 RUN go get -u github.com/FiloSottile/gvt
