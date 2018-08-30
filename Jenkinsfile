@@ -65,8 +65,6 @@ pipeline {
               container('go') {
                 sh "./scripts/build.jb.sh"
                 sh "whoami"
-                sh "sudo apt-get update"
-                sh "sudo apt-get install docker-ce"
                 sh "docker version"
                 sh "make release"
                 sh 'export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml'
