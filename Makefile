@@ -10,8 +10,7 @@ INSTANCE = catalogue
 default: test
 
 release:
-  cd build/docker
-	docker build -t $(NAME) -f ./catalogue/Dockerfile .
+	docker build -t $(NAME) -f ./docker/catalogue/Dockerfile ./build/docker
 
 test: 
 	GROUP=weaveworksdemos COMMIT=test ./scripts/build.sh
