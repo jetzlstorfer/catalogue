@@ -1,6 +1,6 @@
 FROM golang:1.7
 
-COPY . /go/src/github.com/microservices-demo/catalogue
+COPY catalogue/ /go/src/github.com/microservices-demo/catalogue
 WORKDIR /go/src/github.com/microservices-demo/catalogue
 
 RUN go get -u github.com/FiloSottile/gvt
@@ -20,7 +20,7 @@ RUN apt-get update
 RUN apt-get install -y ca-certificates
 
 WORKDIR /
-COPY /app /app
+COPY --from=0 /app /app
 COPY catalogue/images/ /images/
 
 RUN	chmod +x /app && \
