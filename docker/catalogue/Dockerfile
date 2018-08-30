@@ -5,19 +5,19 @@ WORKDIR /go/src/github.com/microservices-demo/catalogue
 
 RUN go get -u github.com/FiloSottile/gvt
 RUN gvt restore && \
-    CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app github.com/microservices-demo/catalogue/cmd/cataloguesvc
+    GOOS=linux go build -a -ldflags -linkmode=external -installsuffix cgo -o /app github.com/microservices-demo/catalogue/cmd/cataloguesvc
 
-FROM alpine:3.4
+FROM ubuntu:16.04
 
 ENV	SERVICE_USER=myuser \
 	SERVICE_UID=10001 \
 	SERVICE_GROUP=mygroup \
 	SERVICE_GID=10001
 
-RUN	addgroup -g ${SERVICE_GID} ${SERVICE_GROUP} && \
-	adduser -g "${SERVICE_NAME} user" -D -H -G ${SERVICE_GROUP} -s /sbin/nologin -u ${SERVICE_UID} ${SERVICE_USER} && \
-	apk add --update libcap
-RUN apk add ca-certificates
+RUN addgroup --gid ${SERVICE_GID} ${SERVICE_GROUP} && adduser --ingroup ${SERVICE_GROUP} --shell /sbin/nologin --uid ${SERVICE_UID} ${SERVICE_USER}
+
+RUN apt-get update
+RUN apt-get install -y ca-certificates
 
 WORKDIR /
 COPY --from=0 /app /app
