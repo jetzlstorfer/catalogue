@@ -65,6 +65,7 @@ pipeline {
               container('go') {
                 sh "./scripts/build.jb.sh"
                 sh "whoami"
+                sh "kubectl version"
                 sh "docker version"
                 sh "make release"
                 sh 'export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml'
